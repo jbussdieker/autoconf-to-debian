@@ -1,0 +1,6 @@
+AC_INIT([autoconf_to_debian], [1.0])
+AC_PREREQ(2.12)
+AC_PROG_CC
+AC_CONFIG_FILES([Makefile])
+AM_INIT_AUTOMAKE
+AC_OUTPUT
