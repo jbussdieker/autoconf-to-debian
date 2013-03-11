@@ -1,4 +1,4 @@
-AC_INIT([autoconf_to_debian], [1.0])
+AC_INIT([autoconf_to_debian], [1.0.1])
 AC_PREREQ(2.12)
 AC_PROG_CC
 AC_CONFIG_FILES([Makefile])

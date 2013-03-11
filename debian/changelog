@@ -1,4 +1,10 @@
-autoconf-to-debian (1.0.0-jaja1) precise; urgency=low
+autoconf-to-debian (1.0.1-jaja1) precise; urgency=low
+
+  * Bump version.
+
+ -- Joshua Bussdieker <jbussdieker@gmail.com>  Sun, 10 Mar 2013 18:34:20 -0800
+
+autoconf-to-debian (1.0.1-jaja1) precise; urgency=low
 
   * Initial build.
 
