@@ -6,3 +6,4 @@ Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.14.10), po-debconf
 
 Package: autoconf-to-debian
 Architecture: any
+Description: A test of debhelper
