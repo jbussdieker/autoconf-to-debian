@@ -42,12 +42,14 @@ install-arch: build
 	dh_prep
 	dh_installdirs -a
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	dh_install -a --sourcedir=$(CURDIR)/debian/tmp --fail-missing
 
 binary-arch: build install-arch
 	dh_testdir
 	dh_testroot
-	dh_installdebconf -a
+	dh_installdeb -a
 	dh_gencontrol -a
+	dh_md5sums -a
 	dh_builddeb -a
 
 binary: binary-arch
