@@ -1,0 +1,57 @@
+#! /usr/bin/make -f
+DEB_HOST_ARCH       ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_ARCH      ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+CFLAGS = -Wall -g
+
+confflags = --host=$(DEB_HOST_GNU_TYPE) \
+                        --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr \
+                        --mandir=\$${prefix}/share/man \
+                        --localstatedir=/var --sysconfdir=/etc \
+                        --without-libstatgrab \
+                        --without-included-ltdl \
+                        --disable-static \
+                        --without-libhal \
+                        --enable-all-plugins
+
+config.status: configure
+	dh_testdir
+	./configure CFLAGS="$(CFLAGS)" || ( status=$$?; cat config.log; exit $$status )
+
+build: build-stamp 
+ 
+build-stamp: config.status 
+	dh_testdir 
+	$(MAKE) 
+	touch build-stamp 
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	[ ! -f Makefile ] || $(MAKE) distclean
+	dh_clean
+
+install-arch: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs -a
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	dh_install -a --sourcedir=$(CURDIR)/debian/tmp --fail-missing
+
+binary-arch: build install-arch
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs -a ChangeLog
+	dh_installdebconf -a
+	dh_link -a
+	dh_fixperms -a
+	dh_installdeb -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+binary: binary-arch
+.PHONY: build clean binary-arch binary install-arch

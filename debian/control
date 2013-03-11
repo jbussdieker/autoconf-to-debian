@@ -1,0 +1,5 @@
+Source: autoconf-to-debian
+Section: utils
+Priority: optional
+Maintainer: Joshua Bussdieker <jbussdieker@gmail.com>
+Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.14.10), po-debconf
