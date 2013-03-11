@@ -16,6 +16,9 @@ confflags = --host=$(DEB_HOST_GNU_TYPE) \
                         --without-libhal \
                         --enable-all-plugins
 
+configure: autogen.sh
+	./autogen.sh
+
 config.status: configure
 	dh_testdir
 	./configure CFLAGS="$(CFLAGS)" || ( status=$$?; cat config.log; exit $$status )
